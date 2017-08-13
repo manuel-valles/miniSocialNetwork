@@ -15,6 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            // Add 2 new rows: username (with 32 max characters) and date of birth
+            $table->string('username', 32);
+            $table->date('dob');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
