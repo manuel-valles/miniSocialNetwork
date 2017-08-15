@@ -20,6 +20,10 @@ class ArticlesController extends Controller
         // $articles = Article::all();
         // Just 10 articles per page
         $articles = Article::paginate(10);
+        // You can also show the Trashed articles by a soft-delete
+        // $articles = Article::withTrashed()->paginate(10);
+        // If you want only the Tashed ones:
+        // $articles = Article::onlyTrashed()->paginate(10);
         // return $articles;
         return view('articles.index', compact('articles'));
         // Now just the articles that are alive:
@@ -112,6 +116,16 @@ class ArticlesController extends Controller
 
     public function destroy($id)
     {
-        //
+        // DELETE METHOD
+        // $article = Article::findOrFail($id);
+        // $article->delete();
+
+        // DESTROY METHOD
+        // Article::destroy($id);
+
+        // FORCE METHOD
+        $article = Article::findOrFail($id);
+        $article->forceDelete();
+        return redirect('/articles');
     }
 }

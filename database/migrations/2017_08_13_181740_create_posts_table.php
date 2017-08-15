@@ -18,6 +18,8 @@ class CreatePostsTable extends Migration
             // A foreigner key for user_id
             $table->integer('user_id');
             $table->text('content');
+            // Add the column softDeletes
+            $table->softDeletes();
             $table->timestamps();
         });
     }

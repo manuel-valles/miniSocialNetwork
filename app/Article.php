@@ -5,9 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 // Import Carbon
 use Carbon\Carbon;
+// Import the soft delete
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    // To be able to use the soft Delete option
+    use SoftDeletes;
+
     // FILLABLE OPTION
     protected $fillable = [
     'user_id', 'content', 'live', 'post_on'
@@ -15,7 +20,7 @@ class Article extends Model
 
     // DATES ISSUE - Edit function -CRUD
     // This is now a Carbon instance
-    protected $dates = ['post_on'];
+    protected $dates = ['post_on', 'deleted_at'];
 	
 	// GUARDED OPTION - Alternative
     // protected $guarded = ['id'];
