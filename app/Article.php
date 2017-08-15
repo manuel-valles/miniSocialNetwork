@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+// Import Carbon
+use Carbon\Carbon;
 
 class Article extends Model
 {
@@ -10,6 +12,10 @@ class Article extends Model
     protected $fillable = [
     'user_id', 'content', 'live', 'post_on'
     ];
+
+    // DATES ISSUE - Edit function -CRUD
+    // This is now a Carbon instance
+    protected $dates = ['post_on'];
 	
 	// GUARDED OPTION - Alternative
     // protected $guarded = ['id'];
@@ -21,8 +27,14 @@ class Article extends Model
     }
 
     // Create an assessor for a shortest content
-    public function getShortContentAttribute($value)
+    public function getShortContentAttribute()
     {
         return substr($this->content, 0, random_int(60, 150)) . '...';
+    }
+
+    // Create a mutator for the Post_on error - Carbon
+    public function setPostOnAttribute($value)
+    {
+        $this->attributes['post_on'] = Carbon::parse($value); 
     }
 }
