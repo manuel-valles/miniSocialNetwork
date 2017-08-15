@@ -8,6 +8,9 @@
 					<span>
 						Article by Manu
 					</span>
+					<small>
+						<a href="/articles/{{ $article->id }}/edit">Edit</a>
+					</small>
 					<span class="pull-right">
 						{{ $article->created_at->diffForHumans() }}
 					</span>

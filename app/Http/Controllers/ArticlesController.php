@@ -77,6 +77,9 @@ class ArticlesController extends Controller
         //     'live' => (boolean) $request->live,
         //     'post_on' => $request->post_on
         // ]);
+        
+        // Once it's stored it must be redirect to the main.
+        return redirect('/articles');
     }
 
 
@@ -98,7 +101,13 @@ class ArticlesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        if(!isset($request->live))
+            $article->update(array_merge($request->all(), ['live' => false]));
+        else
+            $article->update($request->all());
+        // Once it's updated it must be redirect to the main.
+        return redirect('/articles');
     }
 
     public function destroy($id)
