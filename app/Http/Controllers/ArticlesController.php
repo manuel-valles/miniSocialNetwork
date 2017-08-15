@@ -7,13 +7,34 @@ use Illuminate\Http\Request;
 use App\Article;
 // Import Auth
 use Auth;
+// Import DB to do some queries
+use DB;
 
 class ArticlesController extends Controller
 {
 
     public function index()
     {
-        //
+        // ELOQUENT METHOD
+        // Call the Article module and all its functions/articles
+        // $articles = Article::all();
+        // Just 10 articles per page
+        $articles = Article::paginate(10);
+        // return $articles;
+        return view('articles.index', compact('articles'));
+        // Now just the articles that are alive:
+        // $articles = Article::whereLive(1)->get();
+
+        // QUERY BUILDER METHOD
+        // $articles = DB::table('articles')->get();
+        // $articles = DB::table('articles')->whereLive(1)->get();
+        // return $articles;
+
+        // $article = DB::table('articles')->whereLive(1)->first();
+        // In this case you need to use dd (object type error)
+        // dd($article);
+
+        
     }
 
     public function create()
@@ -34,9 +55,28 @@ class ArticlesController extends Controller
         // $article->post_on = $request->post_on;
         // $article->save();
         
-        Article::create($request->all());
+        // CREATE METHOD
+        Article::create($request->all());        
+        // With an array instead:
+        // Article::create([
+        //     'user_id' => Auth::user()->id,
+        //     'content' => $request->content,
+        //     'live' => $request->live,
+        //     'post_on' => $request->post_on
+        // ]);
 
+        
+        // QUERY BUILDER
+        // All() doesn't work. EXCEPT needed and untick live field.
+        // DB::table('articles')->insert($request->except('_token'));
 
+        // Other option: Adding an array. However it will give NULL for update_at and create_at
+        // DB::table('articles')->insert([
+        //     'user_id' => Auth::user()->id,
+        //     'content' => $request->content,
+        //     'live' => (boolean) $request->live,
+        //     'post_on' => $request->post_on
+        // ]);
     }
 
 
