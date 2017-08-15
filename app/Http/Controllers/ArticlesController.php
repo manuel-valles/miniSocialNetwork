@@ -82,7 +82,10 @@ class ArticlesController extends Controller
 
     public function show($id)
     {
-        //
+        // $article = Article::find($id);
+        $article = Article::findOrFail($id);
+        // return $article;
+        return view('articles.show', compact('article'));
     }
 
 

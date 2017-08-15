@@ -13,7 +13,15 @@
 						</span>
 					</div>
 					<div class="panel-body">
-						{{ $article->content }}
+						{{-- Get only the first 100 char: {{ substr($article->content, 0, 100) }} 
+						--}}
+						{{-- Get a random number of characters: {{ substr($article->content, 0, random_int(60, 150)) }} 
+						--}}
+						{{-- Let's use an assesor for this --}}
+						{{ $article->shortContent }}
+
+						<a href="/articles/{{ $article->id }}">Read more</a>
+
 					</div>
 					<div class="panel-footer clearfix">
 						<i class="fa fa-heart pull-right"></i>
